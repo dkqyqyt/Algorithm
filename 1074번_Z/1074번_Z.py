@@ -6,6 +6,7 @@ user_input = input()
 N, r, c = map(int,user_input.split(' '))
 cnt = 0
 found = False
+
 def explore(size, x, y):
     global found
     global cnt
