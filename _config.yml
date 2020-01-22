@@ -16,11 +16,11 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Site Title"
+title                    : "알고리즘 여행을 떠나요"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
-description              : "An amazing website."
+name                     : "류승민"
+description              : "실력이 쭉쭉"
 url                      : "https://dkqyqyt.github.io/Algorithm"
 baseurl                  :
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
