@@ -109,7 +109,7 @@ analytics:
 author:
   name             : "류승민"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "못난 코드를 들여다 봐주셔서 감사드립니다."
+  bio              : ""
   location         : "당신의 마음 속"
   email            :
   links:
