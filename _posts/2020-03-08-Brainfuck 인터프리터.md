@@ -68,3 +68,178 @@ Loops 1 4
 Terminates
 Terminates
 ```
+
+## 나의 코드 1
+
+```
+import sys
+
+TCs = int(sys.stdin.readline())
+
+for tc in range(TCs):
+    len_arr,len_code,len_word = map(int,sys.stdin.readline().split())
+
+    arr = [0] * len_arr
+    loop = [0] * len_code
+    code = sys.stdin.readline()
+    word = sys.stdin.readline()
+
+    idx = 0
+    word_idx = 0
+    code_idx = 0
+    stack = []
+    cnt = 0
+    infinite = False
+
+    for i in range(len_code):
+        if code[i] == '[':
+            stack.append(i)
+        elif code[i] == ']':
+            loc = stack.pop()
+            loop[i] = loc
+            loop[loc] = i
+    max_index = 0
+    while True:
+        if code_idx > max_index:
+            max_index = code_idx
+
+        if code[code_idx] == '+':
+            arr[idx] = (arr[idx]+1) % 256
+        elif code[code_idx] == '-':
+            if arr[idx] == 0:
+                arr[idx] = 255
+            else:
+                arr[idx] = (arr[idx]-1)%256
+        elif code[code_idx] == '<':
+            if idx-1 < 0:
+                idx = len_arr - 1
+            else:
+                idx -= 1
+        elif code[code_idx] == '>':
+            if idx + 1 >= len_arr:
+                idx = 0
+            else:
+                idx += 1
+        elif code[code_idx] == '[':
+            if arr[idx] == 0:
+                code_idx = loop[code_idx]
+                cnt += 1
+                if cnt > 50000000:
+                    print('Loops %d %d' % (loop[max_index], max_index))
+                    break
+                continue
+        elif code[code_idx] == ']':
+            if arr[idx] != 0:
+                code_idx = loop[code_idx]
+                cnt += 1
+                if cnt > 50000000:
+                    print('Loops %d %d' % (loop[max_index], max_index))
+                    break
+                continue
+        elif code[code_idx] == ',':
+            if word_idx >= len(word):
+                arr[idx] = 255
+            else:
+                arr[idx] = ord(word[word_idx])
+                word_idx += 1
+        code_idx += 1
+        cnt += 1
+
+
+        if code_idx == len_code:
+            print('Terminates')
+            break
+
+        if cnt > 50000000:
+            print('Loops %d %d'%(loop[max_index], max_index))
+            break
+```
+
+이거와 비슷한 코드로 10번 가까이 조금씩 수정해서 제출했는데, 계속 틀렸다고 나왔다. 
+
+BrainFuck 인터프리터에 대해 검색을 해보니 '[' 명령어가 수행될 때 다음 ']'로 건너뛰는 것이 아니라 ']' 다음 명령어로 이동한다고 한다. 
+
+큰 영향이 없을 것 같았는데 저 작은 부분에서 맞았습니다와 틀렸습니다가 차이가 났다...
+
+```
+import sys
+
+TCs = int(sys.stdin.readline())
+
+for tc in range(TCs):
+    len_arr,len_code,len_word = map(int,sys.stdin.readline().split())
+
+    arr = [0] * len_arr
+    loop = [0] * len_code
+    code = list(sys.stdin.readline())
+    word = list(sys.stdin.readline())
+
+    idx = 0
+    word_idx = 0
+    code_idx = 0
+    stack = []
+    cnt = 0
+
+    for i in range(len_code):
+        if code[i] == '[':
+            stack.append(i)
+        elif code[i] == ']':
+            loc = stack.pop()
+            loop[i] = loc
+            loop[loc] = i
+    max_index = 0
+    while True:
+        if code[code_idx] == '+':
+            arr[idx] = (arr[idx]+1) % 256
+            code_idx += 1
+        elif code[code_idx] == '-':
+            if arr[idx] == 0:
+                arr[idx] = 255
+            else:
+                arr[idx] = (arr[idx]-1)%256
+            code_idx += 1
+        elif code[code_idx] == '<':
+            if idx-1 < 0:
+                idx = len_arr - 1
+            else:
+                idx -= 1
+            code_idx += 1
+        elif code[code_idx] == '>':
+            if idx + 1 >= len_arr:
+                idx = 0
+            else:
+                idx += 1
+            code_idx += 1
+        elif code[code_idx] == '[':
+            if arr[idx] == 0:
+                code_idx = loop[code_idx]
+            code_idx += 1
+        elif code[code_idx] == ']':
+            if arr[idx] != 0:
+                code_idx = loop[code_idx]
+            else:
+                code_idx += 1
+        elif code[code_idx] == ',':
+            if word_idx >= len_word:
+                arr[idx] = 255
+            else:
+                arr[idx] = ord(word[word_idx])
+                word_idx += 1
+            code_idx += 1
+        else:
+            code_idx += 1
+        cnt += 1
+
+        if code_idx > max_index:
+            max_index = code_idx
+
+        if code_idx == len_code:
+            print('Terminates')
+            break
+
+        if cnt > 50000000:
+            print('Loops %d %d'%(loop[max_index], max_index))
+            break
+```
+
+7440ms 7초의 제한시간에서 조금  더 여유를 받아서 통과하게 된 것 같다.
