@@ -16,7 +16,6 @@ public class n2623_음악프로그램 {
 	
 	static ArrayList<Integer>[] child;
 	static int[] indegree;
-	static boolean[] used;
 	
 	static int stoi(String s) {
 		return Integer.parseInt(s);
@@ -33,7 +32,6 @@ public class n2623_음악프로그램 {
 			child[i] = new ArrayList<Integer>();
 		}
 		indegree = new int[numOfSinger+1];
-		used = new boolean[numOfSinger+1];
 		answer = new ArrayList<Integer>();
 		
 		for(int i = 0; i < numOfPD; i++) {
@@ -47,25 +45,21 @@ public class n2623_음악프로그램 {
 		for(int i = 1; i < numOfSinger+1; i++) {
 			if(indegree[i] == 0) {
 				que.push(i);
-				used[i] = true;
 			}
 		}
 		
 		while(!que.isEmpty()) {
-			int singer = que.pop();
+			int singer = que.poll();
 //			System.out.println(singer);
 			answer.add(singer);
 			
 			for(int i = 0; i < child[singer].size(); i++) {
 				indegree[child[singer].get(i)]--;
-			}
-			
-			for(int i = 1; i < numOfSinger+1; i++) {
-				if(indegree[i] == 0 && !used[i]) {
-					que.push(i);
-					used[i] = true;
+				if(indegree[child[singer].get(i)] == 0) {
+					que.push(child[singer].get(i));
 				}
 			}
+		
 		}
 		
 		if(answer.size() == numOfSinger) {
