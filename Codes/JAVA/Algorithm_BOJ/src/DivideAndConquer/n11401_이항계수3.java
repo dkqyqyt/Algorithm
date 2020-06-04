@@ -23,7 +23,7 @@ public class n11401_이항계수3 {
 		k = stoi(st.nextToken());
 	
 		if(n == 0 || k == 0) {
-			System.out.println(0);
+			System.out.println(1);
 		}else {
 			System.out.println(binomial(n,k));
 		}
