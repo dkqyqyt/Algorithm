@@ -21,7 +21,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "류승민"
 description              : "실력이 쭉쭉"
-url                      : "https://dkqyqyt.github.io/Algorithm"
+url                      : "https://ryu.develop.io/Algorithm"
 baseurl                  :
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
